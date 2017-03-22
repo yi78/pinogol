@@ -1,4 +1,4 @@
-import os, time
+import os, time, sys
 class GameOfLife:
 	"""
 	Internally, dead and alive cells should be '0' and '1'
@@ -149,16 +149,14 @@ class GameOfLife:
 		self.field[0] = tuple(self.field[1])
 		return None
 
-	# standardizes field formats
-	def clean(self,field,alive=None): pass
-	# NOTE: Is there a way to do this?
-	#clean = lambda self, field, alive=None: pass
-
 ### Views ###
 	def dumpcur(self):
-		os.system('cls'); #jumps to 75.4 fps without this
+		if sys.platform != 'win32':
+			os.system('clear');
+		else:
+			os.system('cls');
 
-		print("\n".join(self.field[0]).replace('0',self.chrtheme[0]).replace('1',self.chrtheme[1]))#37.9 fps
+		print("\n".join(self.field[0]).replace('0',self.chrtheme[0]).replace('1',self.chrtheme[1]))
 
 	def stopwatch(self,step):
 		if (step == 'start'):
@@ -178,4 +176,5 @@ class GameOfLife:
 		print('Time elapsed in seconds: '+str(totaltime))
 		print('Cycles per second:',self.lastcycles/totaltime)
 		self.swtimes = [0,0]
+
 if __name__ == "__main__": GameOfLife()
